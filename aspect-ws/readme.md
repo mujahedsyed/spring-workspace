@@ -33,8 +33,6 @@
 
  - Example Tracing:
    - Mark the class as @Component to indicate that it is a spring bean and @Aspect to indicate it is an Aspect. @Before is used to indicate that the method should be executed before the actual method, and the pointcut expression tells which method to apply for: 
-	![Alt text](images/img-4.bmp?raw=true "Aspect Example")
-   - In the above code the aspect is called only for void doSomething() method; which isn't very helpful. To call it for all methods use replace them with wild card characters: 
 ```java
 @Component
 @Aspect
@@ -47,19 +45,33 @@ public class TracingAspect {
 		return enteringCalled;
 	}
 
-	@Before("execution(* *(..))")
+	@Before("execution(void doSomething())")
+	public void entering(JoinPoint joinPoint) {
+		enteringCalled = true;
+		logger.info("entering ");
+	}
+}
+```
+
+   - In the above code the aspect is called only for void doSomething() method; which isn't very helpful. To call it for all methods use replace them with wild card characters: 
+```java
+   @Before("execution(* *(..))")
+	public void entering(JoinPoint joinPoint) {
+		enteringCalled = true;
+		logger.info("entering ");
+	}
+```
+ - JoinPoint
+  - JoinPoints are use to findout which method was called, in the above implementation tracing indicates only that a method was called and doesn’t tell which method was invoked to do this use JoinPoint. Join Point are Point in the control flow of a program.
+  - Advices can be presented with information about the join point. Here we adding JoinPoint to the entering method, this parameter will be filled by spring automatically for us:
+```java
+  @Before("execution(* *(..))")
 	public void entering(JoinPoint joinPoint) {
 		enteringCalled = true;
 		logger.info("entering "
 				+ joinPoint.getStaticPart().getSignature().toString());
 	}
-}
 ```
-
- - JoinPoint
-  - JoinPoints are use to findout which method was called, in the above implementation tracing indicates only that a method was called and doesn’t tell which method was invoked to do this use JoinPoint. Join Point are Point in the control flow of a program.
-  - Advices can be presented with information about the join point. Here we adding JoinPoint to the entering method, this parameter will be filled by spring automatically for us:
-![Alt text](images/img-6.pmg?raw=true "JoinPoint")
 
   - Enable Aspects in Spring XML Configuration
    - To enable aspects in spring configuration xml file use <context:component-scan base-package=""/> this will turn any class that has spring component annotation marked into a spring bean. Our Aspects must be Spring beans. To enable @AspectJ support with XML based configuration use the aop:aspectj-autoproxy element:
@@ -68,7 +80,7 @@ public class TracingAspect {
 <aop:aspectj-autoproxy />
 <context:component-scan base-package="com.mujahed.aop.simpleaspect" />
 ```
-  - The other annotation will change the @Aspect marked class to Aspect.
+   - The other annotation will change the @Aspect marked class to Aspect.
 
  - Enable Aspects in Java Configuration
   - To use Spring Java Configuration use should use @ComponentScan(basePackages="") this will scan for spring beans, you also need to add @EnableAspectJAutoProxy this will enable @Aspect annotation.

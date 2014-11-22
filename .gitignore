@@ -41,3 +41,22 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Eclipse
+.classpath
+.project
+.settings/
+.metadata/
+Servers/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Maven
+log/
+target/
+
+logs/
+.gitignore

@@ -105,12 +105,29 @@ public class SimpleAspectConfiguration {
 ### Advice Deep Dive
 * **Types of advices:**
  1. **Before Advice:**  Advice that executes before a join point, but which does not have the ability to prevent execution flow proceeding to the join point (unless it throws an exception).
-   * Executed before the method.
-   * Exception prevents method to be executed.
-   * Exception is propogated to the caller.
  2. **After Advice:** Advice to be executed regardless of the means by which a join point exits (normal or exceptional return).
  3. **After Throwing:** Advice to be executed if a method exits by throwing an exception.
  4. **After Returning:** Advice to be executed after a join point completes normally: for example, if a method returns without throwing an exception.
  5. **Around Advice:** Advice that surrounds a join point such as a method invocation. This is the most powerful kind of advice. Around advice can perform custom behavior before and after the method invocation. It is also responsible for choosing whether to proceed to the join point or to shortcut the advised method execution by returning its own return value or throwing an exception.
 
 ![Alt text](images/img-7.png?raw=true "Types of advices")
+
+#### Before Advice
+ * Executed before the method.
+ * Exception prevents method to be executed.
+ * Exception is propogated to the caller.
+ 
+```java
+	@Before("execution(* *(..))")
+	public void entering(JoinPoint joinPoint) {
+		enteringCalled = true;
+		logger.info("entering "
+				+ joinPoint.getStaticPart().getSignature().toString());
+	}
+```
+
+#### After Advice
+ * Executed after the method is executed.
+ * Exception could have been thrown...
+ * ...or method could have been executed successfully.
+

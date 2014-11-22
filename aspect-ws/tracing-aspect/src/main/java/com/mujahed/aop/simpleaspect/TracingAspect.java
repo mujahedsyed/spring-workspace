@@ -18,7 +18,7 @@ public class TracingAspect {
 		return enteringCalled;
 	}
 
-	@Before("execution(void doSomething())")
+	@Before("execution(* *(..))")
 	public void entering(JoinPoint joinPoint) {
 		enteringCalled = true;
 		logger.info("entering "

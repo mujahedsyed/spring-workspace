@@ -52,7 +52,8 @@ public class TracingAspect {
 	}
 }
 ```
-    - In the above code the aspect is called only for void doSomething() method; which isn't very helpful. To call it for all methods use replace them with wild card characters:
+   - In the above code the aspect is called only for void doSomething() method; which isn't very helpful. To call it for all methods use replace them with wild card characters:
+
 ```java
    @Before("execution(* *(..))")
 	public void entering(JoinPoint joinPoint) {

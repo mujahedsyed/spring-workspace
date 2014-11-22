@@ -178,4 +178,23 @@ public class SimpleAspectConfiguration {
  * this is possible as around advice is given current method call.
  * ProceedingJoinPoint is extension of JoinPoint allows you to proceed with the method call, method call proceed() is available. If you dont call proceed on the ProceedJoinPoint than the orginal call won't be executed.
  * Around advice is the most powerful advice, you can use it instead of Before and After but it is complex than BeforeAdvice and After Advice. Therefore it should be used appropriatly.
- * 
+
+ ```java
+	@Around(value = "execution(* *(..))")
+	public Object trace(ProceedingJoinPoint proceedingJoinPoint)
+			throws Throwable {
+		String methodInformation = proceedingJoinPoint.getStaticPart()
+				.getSignature().toString();
+		logger.info("Entering :" + methodInformation);
+		called = true;
+
+		try {
+			return proceedingJoinPoint.proceed();
+		} catch (Throwable ex) {
+			logger.error("exception in " + methodInformation, ex);
+			throw ex;
+		} finally {
+			logger.info("Exiting :" + methodInformation);
+		}
+	}
+```

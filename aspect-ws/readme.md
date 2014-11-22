@@ -1,7 +1,7 @@
 # Spring AOP
 
 ## AOP Introduction 
-#### Why AOP?
+### Why AOP?
   - AOP is very important foundation of Spring and also of Java EE.
   - AOP is used to implement enterprise features like transactions, security. 
   - AOP helps to where to start transactions and which methods to secure - therefore configurable middleware.
@@ -23,7 +23,7 @@
  - Aspect oriented programming allows centralized implementation of cross-cutting concerns.
  - Use Spring AOP or AspectJ to weave aspects into the applications.
 
-#### First Aspect Example:
+### First Aspect Example:
  - What is an Aspect?
    - Aspect implements cross-cutting concern in one centralized space of the code base, otherwise cross-cutting concerns are shattered throughout the code.
    - Ultimate goal is to get rid of boiler plate code and focus on business logic.
@@ -61,6 +61,7 @@ public class TracingAspect {
 		logger.info("entering ");
 	}
 ```
+
 #### JoinPoint
   - JoinPoints are use to findout which method was called, in the above implementation tracing indicates only that a method was called and doesn’t tell which method was invoked to do this use JoinPoint. Join Point are Point in the control flow of a program.
   - Advices can be presented with information about the join point. Here we adding JoinPoint to the entering method, this parameter will be filled by spring automatically for us:
@@ -73,7 +74,7 @@ public class TracingAspect {
 	}
 ```
 
-#### Enable Aspects in Spring XML Configuration
+### Enable Aspects in Spring XML Configuration
    - To enable aspects in spring configuration xml file use &lt;context:component-scan base-package=""/&gt; this will turn any class that has spring component annotation marked into a spring bean. Our Aspects must be Spring beans. To enable @AspectJ support with XML based configuration use the aop:aspectj-autoproxy element:
 
 ```xml
@@ -88,7 +89,7 @@ public class TracingAspect {
 ```
    - The annotation will change the @Aspect marked class to Aspect.
 
-#### Enable Aspects in Java Configuration
+### Enable Aspects in Java Configuration
   - To use Spring Java Configuration use should use @ComponentScan(basePackages="") this will scan for spring beans, you also need to add @EnableAspectJAutoProxy this will enable @Aspect annotation.
 ```java
 @Configuration
@@ -98,3 +99,15 @@ public class SimpleAspectConfiguration {
 
 }
 ```
+
+## Introduction and Before Advice
+
+### Advice Deep Dive
+Types of advices:
+1. Before Advice:  Advice that executes before a join point, but which does not have the ability to prevent execution flow proceeding to the join point (unless it throws an exception).
+2. After Advice: Advice to be executed regardless of the means by which a join point exits (normal or exceptional return).
+3. After Throwing: Advice to be executed if a method exits by throwing an exception.
+4. After Returning: Advice to be executed after a join point completes normally: for example, if a method returns without throwing an exception.
+5. Around Advice: Advice that surrounds a join point such as a method invocation. This is the most powerful kind of advice. Around advice can perform custom behavior before and after the method invocation. It is also responsible for choosing whether to proceed to the join point or to shortcut the advised method execution by returning its own return value or throwing an exception.
+
+![Alt text](images/img-7.png?raw=true "Types of advices")

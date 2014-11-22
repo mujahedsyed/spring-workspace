@@ -21,6 +21,16 @@
  - Tracing, Exception Handling and Transactions are cross-cutting concerns.
  - A lot of classes must implement them, and they can't be implemented in one place if you use object oriented programming only.
  - Aspect oriented programming allows centralized implementation of cross-cutting concerns.
+ 
+- Use Spring AOP or AspectJ to weave aspects into the applications.
 
+- First Aspect Example:
+ - What is an Aspect?
+   - Aspect implements cross-cutting concern in one centralized space of the code base, otherwise cross-cutting concerns are shattered throughout the code.
+   - Ultimate goal is to get rid of boiler plate code and focus on business logic.
+   - Aspect = Pointcut + Advice
+![Alt text](images/img-3.bmp?raw=true "Aspect")
 
-
+ - Example Tracing:
+  - Mark the class as @Component to indicate that it is a spring bean and @Aspect to indicate it is an Aspect. @Before is used to indicate that the method should be executed before the actual method, and the pointcut expression tells which method to apply for.
+  ![Alt text](images/img-4.bmp?raw=true "Aspect Example")

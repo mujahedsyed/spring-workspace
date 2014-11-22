@@ -9,5 +9,5 @@
 
 - Simplify code using AOP
  - In a typical method without AOP we would need lots of boiler code for tracing and transaction handling, for instance in below method. The Business logic is still not present:
-![Alt text](https://github.com/mujahedsyed/spring-workspace/blob/master/aspect-ws/images/img-1.bmp "Without AOP")
+![Alt text](images/img-1.bmp?raw=true "Without AOP")
 

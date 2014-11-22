@@ -74,7 +74,7 @@ public class TracingAspect {
 ```
 
 #### Enable Aspects in Spring XML Configuration
-   - To enable aspects in spring configuration xml file use <context:component-scan base-package=""/> this will turn any class that has spring component annotation marked into a spring bean. Our Aspects must be Spring beans. To enable @AspectJ support with XML based configuration use the aop:aspectj-autoproxy element:
+   - To enable aspects in spring configuration xml file use &lt;context:component-scan base-package=""/&gt; this will turn any class that has spring component annotation marked into a spring bean. Our Aspects must be Spring beans. To enable @AspectJ support with XML based configuration use the aop:aspectj-autoproxy element:
 
 ```xml
 <aop:aspectj-autoproxy />
@@ -86,7 +86,7 @@ public class TracingAspect {
 @Aspect
 public class TracingAspect {
 ```
-   - The other annotation will change the @Aspect marked class to Aspect.
+   - The annotation will change the @Aspect marked class to Aspect.
 
 #### Enable Aspects in Java Configuration
   - To use Spring Java Configuration use should use @ComponentScan(basePackages="") this will scan for spring beans, you also need to add @EnableAspectJAutoProxy this will enable @Aspect annotation.

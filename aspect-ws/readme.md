@@ -32,7 +32,7 @@
 ![Alt text](images/img-3.bmp?raw=true "Aspect")
 
  - Example Tracing:
-   - Mark the class as @Component to indicate that it is a spring bean and @Aspect to indicate it is an Aspect. @Before is used to indicate that the method should be executed before the actual method, and the pointcut expression tells which method to apply for: 
+   - Mark the class as @Component to indicate that it is a spring bean and @Aspect to indicate it is an Aspect. @Before is used to indicate that the method should be executed before the actual method, and the pointcut expression tells which method to apply for:
 ```java
 @Component
 @Aspect
@@ -52,8 +52,7 @@ public class TracingAspect {
 	}
 }
 ```
-
-   - In the above code the aspect is called only for void doSomething() method; which isn't very helpful. To call it for all methods use replace them with wild card characters: 
+    - In the above code the aspect is called only for void doSomething() method; which isn't very helpful. To call it for all methods use replace them with wild card characters:
 ```java
    @Before("execution(* *(..))")
 	public void entering(JoinPoint joinPoint) {
@@ -79,6 +78,12 @@ public class TracingAspect {
 ```xml
 <aop:aspectj-autoproxy />
 <context:component-scan base-package="com.mujahed.aop.simpleaspect" />
+```
+
+```java
+@Component
+@Aspect
+public class TracingAspect {
 ```
    - The other annotation will change the @Aspect marked class to Aspect.
 

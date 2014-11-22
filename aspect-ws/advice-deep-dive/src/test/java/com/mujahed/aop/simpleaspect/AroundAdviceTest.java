@@ -13,35 +13,40 @@ import com.mujahed.aop.configuration.AdviceDeepDiveConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = AdviceDeepDiveConfiguration.class)
-public class AfterAdviceTest {
-
-	@Autowired
-	AfterAdvice afterAdvice;
+public class AroundAdviceTest {
 
 	@Autowired
 	SimpleService simpleService;
 
+	@Autowired
+	AroundAdvice aroundAdvice;
+
 	@Before
 	public void reset() {
-		afterAdvice.reset();
+		aroundAdvice.reset();
 	}
 
 	@Test
-	public void afterAspectIsCalledIfMethodReturnsSuccessfully() {
-		assertFalse(afterAdvice.isExitingCalled());
+	public void aroundAdviceIsCalledForSimpleMethod() {
+		assertFalse(aroundAdvice.isCalled());
 		simpleService.doSomething(12);
-		assertTrue(afterAdvice.isExitingCalled());
+		assertTrue(aroundAdvice.isCalled());
+	}
+
+	@Test(expected = RuntimeException.class)
+	public void aroundAdviceIsCalledWhenExceptionIsThrown() throws Exception {
+		assertFalse(aroundAdvice.isCalled());
+		try {
+			simpleService.throwsRuntimeException();
+		} finally {
+			assertTrue(aroundAdvice.isCalled());
+		}
 	}
 
 	@Test
-	public void afterAspectIsCalledIfMethodThrowsException() {
-		assertFalse(afterAdvice.isExitingCalled());
-		try {
-			simpleService.throwRuntimeExceptions();
-		} finally {
-			assertTrue(afterAdvice.isExitingCalled());
-		}
-		simpleService.doSomething(34);
-		assertTrue(afterAdvice.isExitingCalled());
+	public void aroundAdviceIsCalledIfValueIsReturned() {
+		assertFalse(aroundAdvice.isCalled());
+		simpleService.returnString();
+		assertTrue(aroundAdvice.isCalled());
 	}
 }

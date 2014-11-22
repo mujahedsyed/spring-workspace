@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class AfterAdvice {
 
 	boolean afterCalled = false;
-	Logger logger = LoggerFactory.getLogger(TracingAspect.class);
+	Logger logger = LoggerFactory.getLogger(AfterAdvice.class);
 
 	public void reset() {
 		afterCalled = false;

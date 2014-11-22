@@ -131,3 +131,51 @@ public class SimpleAspectConfiguration {
  * Exception could have been thrown...
  * ...or method could have been executed successfully.
 
+ ```java
+ 	@After("execution(* *(..))")
+	public void exiting(JoinPoint joinPoint) {
+		afterCalled = true;
+		logger.info("exiting called " + joinPoint.getSignature());
+		for (Object arg : joinPoint.getArgs()) {
+			logger.info("Arg : " + arg);
+		}
+	}
+```
+
+#### After Throwing Advice
+ * Executed if a method threw an exception
+ * Exception will be propagated to the caller
+ * Thrown exception can be accessed in a type safe manner i.e. method only executed if a RuntimeException is thrown and will not be executed if different type of exception is thrown.
+ 
+```java
+	@AfterThrowing(pointcut = "execution(* *(..))", throwing = "ex")
+	public void logException(RuntimeException ex) {
+		afterThrowingCalled = true;
+		logger.error("Exception :" + ex);
+	}
+```
+
+#### After Returning Advice
+ * Executed if the method returned successfully, can't change the result, can't change the exception.
+ * It will not be called if return type doesn't match.
+ * Will not execute if although the return type matches but exception is thrown.
+ * The pointcut below indicates the wildcard that any return is accepted but actually the returning will override it to indicate that only string return type is accepted, this is done to access it in type safe manner.
+
+```java
+    @AfterReturning(pointcut = "execution(* *(..))", returning = "string")
+	public void logResult(String string) {
+		afterReturnCalled = true;
+		logger.info("result :" + string);
+	}
+```
+
+#### Around Advice
+ * Wraps around the method.
+ * Can prevent the original method from being called
+ * ... without throwing an exception like the before advice
+ * only advice that allows to catch exceptions.
+ * only advice that can modify the return value.
+ * this is possible as around advice is given current method call.
+ * ProceedingJoinPoint is extension of JoinPoint allows you to proceed with the method call, method call proceed() is available. If you dont call proceed on the ProceedJoinPoint than the orginal call won't be executed.
+ * Around advice is the most powerful advice, you can use it instead of Before and After but it is complex than BeforeAdvice and After Advice. Therefore it should be used appropriatly.
+ * 

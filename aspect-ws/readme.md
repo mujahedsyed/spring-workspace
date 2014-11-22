@@ -35,5 +35,5 @@
   - Mark the class as @Component to indicate that it is a spring bean and @Aspect to indicate it is an Aspect. @Before is used to indicate that the method should be executed before the actual method, and the pointcut expression tells which method to apply for: 
     
 	![Alt text](images/img-4.bmp?raw=true "Aspect Example")
-  - In the above code the aspect is called only for <span style="color:blue; font-family:Consolas; font-size:2em;">void doSomething()</span> method; which isn't very helpful. To call it for all methods use replace them with wild card characters: 
+  - In the above code the aspect is called only for <font style="color:blue; font-family:Consolas; font-size:1em;">void doSomething()</font> method; which isn't very helpful. To call it for all methods use replace them with wild card characters: 
 ![Alt text](images/img-5.bmp?raw=true "WildCard")

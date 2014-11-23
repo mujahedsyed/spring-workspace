@@ -234,4 +234,17 @@ public class SimpleAspectConfiguration {
  
  ![Alt text](images/img-9.png?raw=true "Pointcut Expressions") 
  
- ![Alt text](images/img-8.png?raw=true "Pointcut") 
+ ![Alt text](images/img-8.png?raw=true "Pointcut")
+ 
+ 
+ ### Pointcut Annotations
+
+ * Annotations can also be used for defining pointcuts. Example in the code:- execution(@com.mujahed.Annotation * *(..)) this code indicates that the method to qualify must be annotated with com.mujahed.Annotation annotation, note that you need to specify fully qualified class name i.e. incl the package.
+ * You can also use pointcut expression that match classes that are annotated with specific annotation, example execution(* (@com.mujahed.Annotation *).*(..))
+ 
+ ```java
+// Only those methods that are annotated with Trace are called.
+@Around("execution (@annotation.Trace * *(..))")
+public void trace(ProceedingJoinPoint proceedingJP) throws Throwable {
+
+```

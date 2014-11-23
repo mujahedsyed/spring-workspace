@@ -198,3 +198,40 @@ public class SimpleAspectConfiguration {
 		}
 	}
 ```
+
+## Pointcuts Deep Dive
+
+### Method Execution Pointcuts
+
+ * The code - execution(* hello(*)) indicates the execution of method hello, one parameter of any type, any return type.
+ * The code - execution(* hello(..)) indicates the execution of method hello, any number of parameters of any type, any return type.
+ * Pointcuts can be applied to packages and classes, example:
+ 
+ ```java
+ 
+ // indicates execution of metod hello in service class and in package com.mujahed with one ints as parameters and one int as return type.
+ execution(int com.mujahed.Service.hello(int))
+ 
+ ```
+ 
+ * Wildcards can be used in package and classes as well, for example above code can be written with wildcards as:
+ 
+ ```java
+ 
+ /**
+ * Below code indicates:
+ * Execution of any method where
+ *   - class name ends with Service
+ *   - in package com.mujahed or subpackage
+ *   - any return type
+ *   - any parameters
+ **/
+ execution(* com.mujahed..*Service.*(..))
+ 
+ ```
+ 
+ * The code - execution(* *.*(..)) indicates execution of any method with any parameters in any class in the default package. Whereas the code - execution(* *..*.*(..)) indicates execution of any method with any parameters in any class but in any package or subpackage.
+ 
+ ![Alt text](images/img-9.png?raw=true "Pointcut Expressions") 
+ 
+ ![Alt text](images/img-8.png?raw=true "Pointcut") 

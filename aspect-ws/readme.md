@@ -237,14 +237,57 @@ public class SimpleAspectConfiguration {
  ![Alt text](images/img-8.png?raw=true "Pointcut")
  
  
- ### Pointcut Annotations
+### Pointcut Annotations
 
- * Annotations can also be used for defining pointcuts. Example in the code:- execution(@com.mujahed.Annotation * *(..)) this code indicates that the method to qualify must be annotated with com.mujahed.Annotation annotation, note that you need to specify fully qualified class name i.e. incl the package.
+ * Annotations can also be used for defining pointcuts. Example in the code:- 
+ 
+```java
+execution(@com.mujahed.Annotation * *(..)) 
+```
+ This code indicates that the method to qualify must be annotated with com.mujahed.Annotation annotation, note that you need to specify fully qualified class name i.e. incl the package.
+
  * You can also use pointcut expression that match classes that are annotated with specific annotation, example execution(* (@com.mujahed.Annotation *).*(..))
  
- ```java
+```java
 // Only those methods that are annotated with Trace are called.
 @Around("execution (@annotation.Trace * *(..))")
 public void trace(ProceedingJoinPoint proceedingJP) throws Throwable {
 
 ```
+
+### Spring bean names as pointcuts
+ * You can also use spring bean names to mention pointcuts. 
+ 
+![Alt text](images/img-10.png?raw=true "bean names Pointcut")
+
+### Pointcuts and Boolean operators
+ * you can also use boolean operators to combine pointcuts. Below examples matches any methods in any class in package service or repository.
+ 
+![Alt text](images/img-11.png?raw=true "boolean operators on Pointcut")
+
+ * If you are using same pointcut expression over and over again than you can reuse a pointcut expression. This can be done through @Pointcut annotation
+ 
+ ```java
+ package com.mujahed.pointcuts;
+
+import org.aspectj.lang.annotation.Pointcut;
+
+public class MyPointcuts {
+
+	// traceAnnotated method is always empty, the only purpose of the method is to be annotated.
+	@Pointcut("execution(@annotation.Trace * * (..))")
+	public void traceAnnotated(){
+	}
+}
+```
+ * once the above method is defined you can use this method as a pointcut expression, example:
+ 
+ ```java
+
+ @Around("com.mujahed.pointcuts.MyPointcuts.traceAnnotated()")
+public void trace(ProceedingJoinPoint proceedingJP) throws Throwable {
+
+```
+
+### Summary
+![Alt text](images/img-12.png?raw=true "Summary")

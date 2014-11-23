@@ -267,7 +267,7 @@ public void trace(ProceedingJoinPoint proceedingJP) throws Throwable {
 
  * If you are using same pointcut expression over and over again than you can reuse a pointcut expression. This can be done through @Pointcut annotation
  
- ```java
+```java
  package com.mujahed.pointcuts;
 
 import org.aspectj.lang.annotation.Pointcut;
@@ -282,12 +282,12 @@ public class MyPointcuts {
 ```
  * once the above method is defined you can use this method as a pointcut expression, example:
  
- ```java
+```java
 
- @Around("com.mujahed.pointcuts.MyPointcuts.traceAnnotated()")
+@Around("com.mujahed.pointcuts.MyPointcuts.traceAnnotated()")
 public void trace(ProceedingJoinPoint proceedingJP) throws Throwable {
 
 ```
 
 ### Summary
-![Alt text](images/img-12.png?raw=true "Summary")
+ ![Alt text](images/img-12.png?raw=true "Summary")

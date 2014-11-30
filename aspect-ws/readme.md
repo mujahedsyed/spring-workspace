@@ -300,6 +300,7 @@ public void trace(ProceedingJoinPoint proceedingJP) throws Throwable {
  * As an example we can cosider two areas in the code Service and Repository; so lets suppose that calls to Service should be:
   * traced 
   * and exceptions logged
+
  and lets suppose that calls to Repository should be:
   * traced
   * performance logged

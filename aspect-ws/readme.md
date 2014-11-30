@@ -291,3 +291,16 @@ public void trace(ProceedingJoinPoint proceedingJP) throws Throwable {
 
 ### Summary
  ![Alt text](images/img-12.png?raw=true "Summary")
+ 
+### Expressing Architecuture using Spring AOP
+
+#### Architecture problems
+ * Problems with current Architecture process is that it is often in documents and most of the time documents are not read, if they are read they are not followed. And if they are followed then there is lot of boilerplate code.
+ * AOP can help with such problems, in AOP architecture is defined in the code and developers have to follow it.
+ * As an example we can cosider two areas in the code Service and Repository; so lets suppose that calls to Service should be:
+  * traced 
+  * and exceptions logged
+ and lets suppose that calls to Repository should be:
+  * traced
+  * performance logged
+  * and exceptions logged

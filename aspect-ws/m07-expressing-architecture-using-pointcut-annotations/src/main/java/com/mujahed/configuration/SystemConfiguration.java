@@ -7,6 +7,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @Configuration
 @EnableAspectJAutoProxy
 @ComponentScan(basePackages = "com.mujahed")
-public class PointCutDeepDiveConfiguration {
+public class SystemConfiguration {
 
 }

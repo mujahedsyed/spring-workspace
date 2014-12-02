@@ -297,7 +297,7 @@ public void trace(ProceedingJoinPoint proceedingJP) throws Throwable {
 #### Architecture problems
  * Problems with current Architecture process is that it is often in documents and most of the time documents are not read, if they are read they are not followed. And if they are followed then there is lot of boilerplate code.
  * AOP can help with such problems, in AOP architecture is defined in the code and developers have to follow it.
- * As an example we can cosider two areas in the code Service and Repository; so lets suppose that calls to Service should be:
+ * As an example we can cosider two areas in the code Service and Repository; so lets suppose that we like to add specific behaviours to specific parts of the system like calls to Service should be:
   * traced 
   * and exceptions logged
 
@@ -305,3 +305,69 @@ public void trace(ProceedingJoinPoint proceedingJP) throws Throwable {
   * traced
   * performance logged
   * and exceptions logged
+
+ ![Alt text](images/img-13.png?raw=true "Using AOP Properly")
+ 
+ #### Using Annotations to define architecture
+ * You can use annotations to define architecture of a system, Spring framework already has annotations for Service, Repository (to indicate that they are service and repository class). Spring dependency Injection will be executed on the classes that are annotated with @Component, @Service, @Repository.
+ * In order to define architecture using annotations follow following steps:
+ 
+  * Step 1: Define architecture as pointcuts
+```java
+  
+  public class SystemArchitecture {
+
+	// any method, in any class, any kind of parameters and any return type but the class is maked with @Repository annotation
+	@Pointcut("execution(* (@org.springframework.stereotype.Repository *).*(..))")
+	public void Repository(){
+		
+	}
+	
+	// any method, in any class, any kind of parameters and any return type but the class is maked with @Service annotation
+	@Pointcut("execution(* (@org.springframework.stereotype.Service *).*(..))")
+	public void Service(){
+		
+	}
+}
+```
+  * Step 2: Define behavior using Advices, for instance here we are saying exceptions should be logged.
+  
+  * Step 3: Add advices to correct pointcuts, in below case services and repository i.e. for all classes that are marked with @Repository and @Service annotation.
+```java
+@Component
+@Aspect
+public class ExceptionLoggerAspect extends CallTracker {
+
+	Logger LOGGER = LoggerFactory.getLogger(ExceptionLoggerAspect.class);
+
+	@AfterThrowing(pointcut = "SystemArchitecture.Repository() || SystemArchitecture.Service()", throwing = "ex")
+	public void logException(Exception ex) {
+		trackCall();
+		LOGGER.error("Exception ", ex);
+	}
+}
+```
+  
+#### Using Packages to define architecture
+ * You can use packages to define architecture of a system.
+ * In order to define architecture using packages in the SystemArchitecture code change the pointcuts to use packages:
+ 
+```java
+  
+  public class SystemArchitecture {
+
+	// any class in subpackage repository of com.mujahed
+	@Pointcut("execution(* com.mujahed..repository.*.*.(..))")
+	public void Repository(){
+		
+	}
+	
+	// any class in subpackage Service of com.mujahed
+	@Pointcut("execution(* com.mujahed..service.*.*.(..))")
+	public void Repository(){
+		
+	}
+}
+```
+
+### How Aspects are Added to Objects

@@ -6,38 +6,26 @@ import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
 
 @Component
 @Aspect
-public class ClassNameAspect {
+public class PerformanceAspect extends CallTracker {
 
-	Logger logger = LoggerFactory.getLogger(ClassNameAspect.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(PerformanceAspect.class);
 
-	private int called = 0;
-
-	public void resetCalled() {
-		called = 0;
-	}
-
-	public int getCalled() {
-		return called;
-	}
-
-	@Around("execution (* *..*Service.*(..))")
+	@Around("SystemArchitecture.Repository()")
 	public void trace(ProceedingJoinPoint proceedingJP) throws Throwable {
 		String methodInformation = proceedingJP.getStaticPart().getSignature()
 				.toString();
-		logger.info("Entering :" + methodInformation);
-		called++;
-
+		StopWatch stopWatch = new StopWatch(methodInformation);
+		stopWatch.start();
+		trackCall();
 		try {
 			proceedingJP.proceed();
-		} catch (Throwable ex) {
-			logger.error("Exception in " + methodInformation, ex);
-			throw ex;
 		} finally {
-			logger.info("Exiting :" + methodInformation);
+			stopWatch.stop();
+			LOGGER.trace(stopWatch.shortSummary());
 		}
 	}
-
 }

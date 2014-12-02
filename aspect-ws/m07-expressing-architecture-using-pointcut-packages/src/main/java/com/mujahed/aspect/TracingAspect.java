@@ -9,34 +9,24 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Aspect
-public class BeanNameAspect {
+public class TracingAspect extends CallTracker {
 
-	Logger logger = LoggerFactory.getLogger(BeanNameAspect.class);
+	Logger logger = LoggerFactory.getLogger(TracingAspect.class);
 
-	private int called = 0;
-
-	public void resetCalled() {
-		called = 0;
-	}
-
-	public int getCalled() {
-		return called;
-	}
-
-	@Around("bean(*Service)")
+	@Around("SystemArchitecture.Repository() || SystemArchitecture.Service()")
 	public void trace(ProceedingJoinPoint proceedingJP) throws Throwable {
+
 		String methodInformation = proceedingJP.getStaticPart().getSignature()
 				.toString();
-		logger.info("Entering :" + methodInformation);
-		called++;
-
+		logger.trace("Entering " + methodInformation);
+		trackCall();
 		try {
 			proceedingJP.proceed();
 		} catch (Throwable ex) {
 			logger.error("Exception in " + methodInformation, ex);
 			throw ex;
 		} finally {
-			logger.info("Exiting :" + methodInformation);
+			logger.trace("Exiting " + methodInformation);
 		}
 	}
 

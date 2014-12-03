@@ -371,3 +371,33 @@ public class ExceptionLoggerAspect extends CallTracker {
 ```
 
 ### How Aspects are Added to Objects
+ * Springframework creates a proxy around original object, and the proxy is passed to any classes invoking the original class. Proxy looks like original objects, the proxy is injected through dependency injection.
+ * There are two ways how proxy's are implemented either dynamic proxies (JDK Feature) are used or CGLIB is used.
+ * when the other spring beans calls to thinks that it has original object (and not a proxy) so the call is forward to the original object and also to advice.
+ 
+![Alt text](images/img-14.png?raw=true "How aspects are added")
+
+ * when you do a local method call proxies are not called, proxies never called so advice never called.. Original object just calls the method in it. Call never reaches the proxy. Below code is not in transaction:
+ 
+![Alt text](images/img-15.png?raw=true "Local Method call - Proxy not called")
+
+ * If you are dealing with a bean that is implemented through an interface than for proxies to work you should either:
+  * all methods in the class implementing the interface should be present in the interface 
+  * in @EnableAsjectJAutoProxy(proxyTargetClass=true)
+ * CGLIB allows to create dynamic subclass. Subclass implements the proxy. CGLIB is used if no interfaces are implemented, or set proxy-target-class to true. 
+ * Another way to implement AOP is Dynamic Proxy, this feature is available in JDK. This is for interfaces only. Dynamic proxy is always implementation of interface.
+ 
+#### Limitations of the proxy-based AOP Model
+ * Work only on public methods.
+ * Works only on methods  from outside, no internal method call.
+ * Spring Depdency injection makes AOP Transparent.
+ 
+### Spring AOP vs AspectJ
+ * AspectJ is faster and powerful than Spring AOP.
+ * Spring AOP uses the same syntax as Aspectj. All the annotations like @Aspect, @Before, @After, @Pointcut, pointcut expression will work in aspectj except bean pointcut expression. Bean pointcut expression will not work in aspectj is because it is depedent on spring depedency injection.
+ * Aspects are applied differently in Aspectj. Aspectj uses bytecode weaving i.e. classes and aspect are both woven into bytecode. Weaving might be done when the classes are loaded or when compiled.
+
+![Alt text](images/img-16.png?raw=true "Byte code weaving")
+
+#### Load time weaving
+

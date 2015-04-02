@@ -26,6 +26,7 @@ To mark the scope of a bean using annotation, @Scope should be used in conjuncti
 public class MyBean() {
  ...
 }
+```
 
 ### defining scope in xml
 ```xml

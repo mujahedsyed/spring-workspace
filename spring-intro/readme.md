@@ -44,5 +44,8 @@ BeanPostProcessor is used by @Autowired annotation. At runtime if @Autowired is 
 
 BeanPostProcessor doesn't have the capability to create new beans dynamically, and it doesn't have ability to change configuration metadata of the object before its created.You can change the metadata after it's created.
 
-BeanFactoryPostProcessor is slightly more powerful.  
+BeanFactoryPostProcessor is slightly more powerful. This can be useful if you want to make sure certain frameworks are available, check certain constraints are available like auditing data etc.
+
 ![Alt text](images/beanfactorypostprocessor.png?raw=true "BeanFactoryPostProcessor")
+
+ - The Bean method for the BeanFactoryPostProcessor is static and it must always be static. This is because this method is invoked before the other beans.

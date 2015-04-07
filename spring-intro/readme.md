@@ -31,7 +31,18 @@ public class MyBean() {
 ### defining scope in xml
 ```xml
 <bean id="myBean" class="com.mycompany.MyBean" scope="prototype"/>
-
-### Request and Session Scopes **TODO**
-
 ```
+
+### Request and Session Scopes **TODO** 
+
+
+### Teach your bean new Tricks
+
+BeanPostProcessor is used by @Autowired annotation. At runtime if @Autowired is present the container will look for the appropriate value and it will inject the dependency.
+
+![Alt text](images/teach-tricks.png?raw=true "Spring Bean Tricks")
+
+BeanPostProcessor doesn't have the capability to create new beans dynamically, and it doesn't have ability to change configuration metadata of the object before its created.You can change the metadata after it's created.
+
+BeanFactoryPostProcessor is slightly more powerful.  
+![Alt text](images/beanfactorypostprocessor.png?raw=true "BeanFactoryPostProcessor")

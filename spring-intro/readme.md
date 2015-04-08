@@ -36,7 +36,7 @@ public class MyBean() {
 ### Request and Session Scopes **TODO** 
 
 
-### Teach your bean new Tricks
+## Teach your bean new Tricks
 
 A **BeanPostProcessor** gives you a chance to process an instance of a bean created by the IoC container after it's instantiation and then again after the initialization lifecycle event has occurred on the instance. You could use this to process fields that were set, perform validation on a bean, or even look up values from a remote resource to set on the bean as defaults.
 
@@ -75,7 +75,47 @@ BeanPostProcessor doesn't have the capability to create new beans dynamically, a
 
  - The Bean method for the BeanFactoryPostProcessor is static and it must always be static. This is because this method is invoked before the other beans.
  
-### Teach your bean new Tricks with AOP
-AOP gives ability to express patterns, these patterns match object. To support this in Spring we have @EnableAspectJAutoProxy annotation. 
+## Teach your bean new Tricks with AOP
+AOP gives ability to express patterns, these patterns match object. 
 
 ![Alt text](images/aop.png?raw=true "AOP")
+
+To support this in Spring we have @EnableAspectJAutoProxy annotation that is placed on a Configuration class automatically registers all beans marked with @Aspect with the container and than registers all the advise they provide. Here we have an Aspect we want this aspect to only run when a method has annotation @Timed on it; jointpoint represents the current method execution.
+
+![Alt text](images/aop-timed.png?raw=true "AOP Timed")
+
+Transactions in Spring uses AOP.
+
+# Power Tools in Core Spring
+## Get Beans from Strange Places
+FactoryBean in Spring plays a key role; as the name implies its a factory pattern for creating beans.
+
+FactoryBean has three methods; getObject, getObjectType, isSingleton(). The getObject is charged with returning fully configured fully ready to use. FactoryBean is used in situations where you dont want spring to invoke a constructor of a class to create a bean; instead you want to get the bean from FactoryBean. FactoryBean examples are available in Spring Framework for example suppose you want to look up an object in JNDI you can use JndiObjectFactoryBean. Another example is a TaskExecutor, TaskExecutor in Spring models a Thread Pool. 
+
+![Alt text](images/factorybean.png?raw=true "FactoryBean")
+ 
+### SpEL Spring Expression Language
+
+![Alt text](images/spel.png?raw=true "SpEL") 
+
+```java
+    @Value("#{ T(Math).random() }")
+	private double aRandomValue;
+
+   @Value("#{systemProperties['user.home']}")
+   private String userHome;
+
+   private File tmpDir;
+
+   @Value("#{systemProperties['java.io.tmpdir']}")
+	public void setIoTmpDir(String tmpDir) {
+		this.tmpDir = new File(tmpDir);
+	}
+```
+
+### Profiles
+Its a common use case to inject a dataSource that is specific to a Environment because dataSource for development is different than from Testing or Production.
+
+## Manage Threading with Spring
+## Schedule jobs with Spring
+## Cache expensive operations with CacheManager API

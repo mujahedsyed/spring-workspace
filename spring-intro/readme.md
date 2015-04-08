@@ -114,7 +114,14 @@ FactoryBean has three methods; getObject, getObjectType, isSingleton(). The getO
 ```
 
 ### Profiles
-Its a common use case to inject a dataSource that is specific to a Environment because dataSource for development is different than from Testing or Production.
+It's a common use case to inject a dataSource that is specific to a Environment because dataSource for development is different than from Testing or Production.
+
+ - Property files work to an extent you can change URL, username, password etc. The reason to prefer Spring Profile over other options like property file profiles in Maven is that you cannot select the driver class at runtime, i.e. if you have embedded dataSource for Local Env and Oracle for Prod.
+ - You can't actually change the Driver of the dataSource with Property Files, as its a completely different object. 
+ 
+What we need is a way to tell that this is the bean for Local Env and this is the bean for PROD and tag them. Spring provide such a feature through Profiles. So a particular bean is available only when corresponding Tag is active.
+
+![Alt text](images/profiles.png?raw=true "Spring Profiles") 
 
 ## Manage Threading with Spring
 ## Schedule jobs with Spring

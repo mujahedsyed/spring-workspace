@@ -38,14 +38,44 @@ public class MyBean() {
 
 ### Teach your bean new Tricks
 
-BeanPostProcessor is used by @Autowired annotation. At runtime if @Autowired is present the container will look for the appropriate value and it will inject the dependency.
+A **BeanPostProcessor** gives you a chance to process an instance of a bean created by the IoC container after it's instantiation and then again after the initialization lifecycle event has occurred on the instance. You could use this to process fields that were set, perform validation on a bean, or even look up values from a remote resource to set on the bean as defaults.
+
+BeanPostProcessors and any beans they depend on are instantiated before any other beans in the container. After they are instantiated and ordered, they are used to process all the other beans as they are instantiated by the IoC container. Spring's different AOP proxies for caching, transactions, etc. are all applied by BeanPostProcessors. So, any BeanPostProcessor you create isn't eligible for AOP proxies. Since AOP proxies are applied this way, it's possible an AOP proxy may not yet have been applied to the instance so care should be taken if this will affect any post processing being done.
+
+**BeanPostProcessor** is used by @Autowired annotation. At runtime if @Autowired is present the container will look for the appropriate value and it will inject the dependency.
 
 ![Alt text](images/teach-tricks.png?raw=true "Spring Bean Tricks")
 
 BeanPostProcessor doesn't have the capability to create new beans dynamically, and it doesn't have ability to change configuration metadata of the object before its created.You can change the metadata after it's created.
 
-BeanFactoryPostProcessor is slightly more powerful. This can be useful if you want to make sure certain frameworks are available, check certain constraints are available like auditing data etc.
+- BeanFactoryPostProcessor is slightly more powerful. This can be useful if you want to make sure certain frameworks are available, check certain constraints are available like auditing data etc.
+
+ - A BeanFactoryPostProcessor lets you modify the actual bean definition instead of the instance as it's created. The PropertyResourceConfigurer and PropertyPlaceholderConfigurer are two very useful BeanFactoryPostProcessors. They let you put placeholders as property values that are then replaced with values from property file. This is very useful for configuring a database connection pool, mail server, etc.
 
 ![Alt text](images/beanfactorypostprocessor.png?raw=true "BeanFactoryPostProcessor")
 
+
+**PropertyPlaceholderConfigurer**
+```xml
+<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="locations" value="person.properties" />
+</bean>
+```                    
+                
+**Context Namespace Property Placeholder**
+```xml                    
+<context:property-placeholder location="person.properties"/>
+
+<bean id="person"
+      class="org.springbyexample.springindepth.bean.Person">
+    <property name="firstName" value="${firstName}" />
+    <property name="lastName" value="${lastName}" />
+</bean>
+```
+
  - The Bean method for the BeanFactoryPostProcessor is static and it must always be static. This is because this method is invoked before the other beans.
+ 
+### Teach your bean new Tricks with AOP
+AOP gives ability to express patterns, these patterns match object. To support this in Spring we have @EnableAspectJAutoProxy annotation. 
+
+![Alt text](images/aop.png?raw=true "AOP")

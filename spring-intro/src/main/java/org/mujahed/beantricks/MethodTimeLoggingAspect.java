@@ -7,7 +7,7 @@ import org.aspectj.lang.annotation.Aspect;
 @Aspect
 public class MethodTimeLoggingAspect {
 
-	@Around("@annotation(com.joshlong.spring.walkingtour.ioc.manybeans.Timed)")
+	@Around("@annotation(org.mujahed.beantricks.Timed)")
 	public Object time(ProceedingJoinPoint invocation) throws Throwable {
 		long start = System.currentTimeMillis();
 		System.out.println("----------------------------------------");

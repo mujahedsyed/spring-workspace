@@ -123,6 +123,81 @@ What we need is a way to tell that this is the bean for Local Env and this is th
 
 ![Alt text](images/profiles.png?raw=true "Spring Profiles") 
 
+#### Using profile abstraction in actual code
+
+```java
+@Configuration
+@Import({ CloudDataSource.class, LocalDataSource.class, ProductionDataSource.class })
+public class ProfileConfiguration{
+	
+   private String entityPackage;
+   
+   @Bean
+   public SessionFactory hibernateSessionFactory(DataSource dataSource) throws Throwable {
+   return new LocalSessionFactoryBuilder(dataSource).scanPackages(this.entityPackage).buildSessionFactory();
+   }
+   
+   @Bean
+   public PlatformTransactionManager transactionManager(SessionFactory sf, DataSource dataSource){
+   HibernateTransactionManager manager = new HibernateTransactionManager();
+   manager.setDataSource(dataSource);
+   manager.setSessionFactory(sf);
+   return manager;
+   }
+}
+```
+
+### The Spring Environment Abstraction
+ - Environment Abstraction provides a way to ask questions about Env app is running. 
+ - Env Abstraction is superset of Property placeholder resolution that we saw earlier. 
+ - Env Abstraction is a generic way of saying I have keys and values and they are mapped by Environment.
+
+![Alt text](images/env.png?raw=true "Spring Env")
+
+
 ## Manage Threading with Spring
+The Spring Framework provides abstractions for asynchronous execution and scheduling of tasks with the TaskExecutor and TaskScheduler interfaces, respectively. 
+
+### The Spring TaskExecutor Abstraction
+ - Executors are the Java 5 name for the concept of thread pools. The "executor" naming is due to the fact that there is no guarantee that the underlying implementation is actually a pool; an executor may be single-threaded or even synchronous. Spring’s abstraction hides implementation details between Java SE 1.4, Java SE 5 and Java EE environments.
+
+ - Spring’s TaskExecutor interface is identical to the java.util.concurrent.Executor interface. In fact, its primary reason for existence was to abstract away the need for Java 5 when using thread pools. The interface has a single method execute(Runnable task) that accepts a task for execution based on the semantics and configuration of the thread pool.
+
+```java
+import java.util.concurrent.Executor;
+
+/**
+ * Simple task executor interface that abstracts the execution
+ * of a {@link Runnable}.
+ *
+ * <p>Implementations can use all sorts of different execution strategies,
+ * such as: synchronous, asynchronous, using a thread pool, and more.
+ *
+ * <p>Equivalent to JDK 1.5's {@link java.util.concurrent.Executor}
+ * interface; extending it now in Spring 3.0, so that clients may declare
+ * a dependency on an Executor and receive any TaskExecutor implementation.
+ * This interface remains separate from the standard Executor interface
+ * mainly for backwards compatibility with JDK 1.4 in Spring 2.x.
+ *
+ * @author Juergen Hoeller
+ * @since 2.0
+ * @see java.util.concurrent.Executor
+ */
+public interface TaskExecutor extends Executor {
+	/**
+	 * Execute the given {@code task}.
+	 * <p>The call might return immediately if the implementation uses
+	 * an asynchronous execution strategy, or might block in the case
+	 * of synchronous execution.
+	 * @param task the {@code Runnable} to execute (never {@code null})
+	 * @throws TaskRejectedException if the given task was not accepted
+	 */
+	@Override
+	void execute(Runnable task);
+}
+
+```
+![Alt text](images/task-exec.png?raw=true "Spring TaskExecutor")
+
 ## Schedule jobs with Spring
 ## Cache expensive operations with CacheManager API

@@ -52,6 +52,9 @@ Servers/
 # Intellij
 .idea/
 *.iml
+
+# STS
+Servers
 *.iws
 
 # Maven
@@ -63,3 +66,4 @@ logs/
 
 RemoteSystemsTempFiles
 Servers
+RemoteSystemsTempFiles

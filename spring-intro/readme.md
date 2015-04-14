@@ -212,4 +212,13 @@ The above setup allows @Async annotation to be used on methods.
 As with TaskExecutor SPI the TaskSchedular is also a way to run the jobs but at a given time and not immediately. 
 
 ![Alt text](images/task-sch.png?raw=true "Task Scheduler")
+
+You can either use a cron expression or tell it to run on a particular date or time or after some seconds or every few seconds.
+
+Just like @EnableAsync we have @EnableScheduling annotation. You can put that on the configuration file as shown below:
+
+![Alt text](images/schedule.png?raw=true "EnableSync")
+
+![Alt text](images/schedule-ann.png?raw=true "EnableSync")
+
 ## Cache expensive operations with CacheManager API

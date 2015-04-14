@@ -208,4 +208,8 @@ The above setup allows @Async annotation to be used on methods.
 ![Alt text](images/async-ann.png?raw=true "@Async")
 
 ## Schedule jobs with Spring
+
+As with TaskExecutor SPI the TaskSchedular is also a way to run the jobs but at a given time and not immediately. 
+
+![Alt text](images/task-sch.png?raw=true "Task Scheduler")
 ## Cache expensive operations with CacheManager API

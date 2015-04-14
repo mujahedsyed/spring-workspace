@@ -201,7 +201,7 @@ public interface TaskExecutor extends Executor {
 
 One very useful example of TaskExecutor is @Async and @EnableAsync annotations. 
 
-![Alt text](images/async.png.png?raw=true "@Async and @EnableAsync")
+![Alt text](images/async.png?raw=true "@Async and @EnableAsync")
 
 ## Schedule jobs with Spring
 ## Cache expensive operations with CacheManager API

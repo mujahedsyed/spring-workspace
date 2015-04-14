@@ -203,5 +203,9 @@ One very useful example of TaskExecutor is @Async and @EnableAsync annotations.
 
 ![Alt text](images/async.png?raw=true "@Async and @EnableAsync")
 
+The above setup allows @Async annotation to be used on methods.
+
+![Alt text](images/async-ann.png?raw=true "@Async")
+
 ## Schedule jobs with Spring
 ## Cache expensive operations with CacheManager API

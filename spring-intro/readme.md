@@ -4,7 +4,7 @@
 ### Why Spring?
   - Simplify Code
 
-### Hello World Example:
+### Hello World Example
  
 ## Bean's Lifecycle
 ![Alt text](images/lifecycle-1.png?raw=true "Spring Bean Lifecycle")
@@ -12,10 +12,10 @@
 ## Scoping Beans
 By default, all beans created in the spring application context are created as singletons. Spring defines several scopes:
 
-*Singleton* - One instance of the bean is created for the entire application
-*Prototype* - One instance of the bean is created every time the bean is injected into or retrieved from Spring application context.
-*Sessions* - In a web app, one instance per session.
-*Request* - In a web app, one instance per request.
+ *Singleton* - One instance of the bean is created for the entire application.
+ *Prototype* - One instance of the bean is created every time the bean is injected into or retrieved from Spring application context.
+ *Sessions* - In a web app, one instance per session.
+ *Request* - In a web app, one instance per request.
 
 ### defining scope with annotation
 To mark the scope of a bean using annotation, @Scope should be used in conjunction with either @Component or @Bean:
@@ -46,7 +46,7 @@ BeanPostProcessors and any beans they depend on are instantiated before any othe
 
 ![Alt text](images/teach-tricks.png?raw=true "Spring Bean Tricks")
 
-BeanPostProcessor doesn't have the capability to create new beans dynamically, and it doesn't have ability to change configuration metadata of the object before its created.You can change the metadata after it's created.
+ - BeanPostProcessor doesn't have the capability to create new beans dynamically, and it doesn't have ability to change configuration metadata of the object before its created.You can change the metadata after it's created.
 
 - BeanFactoryPostProcessor is slightly more powerful. This can be useful if you want to make sure certain frameworks are available, check certain constraints are available like auditing data etc.
 
@@ -198,6 +198,10 @@ public interface TaskExecutor extends Executor {
 
 ```
 ![Alt text](images/task-exec.png?raw=true "Spring TaskExecutor")
+
+One very useful example of TaskExecutor is @Async and @EnableAsync annotations. 
+
+![Alt text](images/async.png.png?raw=true "@Async and @EnableAsync")
 
 ## Schedule jobs with Spring
 ## Cache expensive operations with CacheManager API

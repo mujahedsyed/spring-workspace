@@ -222,3 +222,10 @@ Just like @EnableAsync we have @EnableScheduling annotation. You can put that on
 ![Alt text](images/schedule-ann.png?raw=true "EnableSync")
 
 ## Cache expensive operations with CacheManager API
+- *Caching* is a way to store frequently needed information so that it's readily available when needed.
+- **Spring doesn't implement a cache solution**, it offers declarative support for caching that integrates with several popular caching implementation.
+- Spring provides CacheManager API. The CacheManager API provides adapters for different types of third party cache services like Ehcache, gemfire, Coherence, JSR 107 etc.
+
+![Alt text](images/cache.png?raw=true "CacheManager API")
+
+### Enabling cache support

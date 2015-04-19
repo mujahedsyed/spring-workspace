@@ -43,5 +43,17 @@ public class CachingConfiguration {
 
 ```
 
+ - Under the covers, @EnableCaching and <cache:annotation-driven> work the same way. They create an aspect with pointcuts that trigger off of Spring’s caching annotations. Depending on the annotation used and the state of the cache, that aspect will fetch a value from the cache, add a value to the cache, or remove a value from the cache.
+ 
+ - The above configurations also declare a cacheManager bean, this bean is an implementation of org.springframework.cache.CacheManager out of the box, Spring 3.1 comes with five cache-manager implementations:
+􏰀  - SimpleCacheManager
+􏰀  - NoOpCacheManager
+􏰀  - ConcurrentMapCacheManager
+  - CompositeCacheManager
+􏰀  - EhCacheCacheManager
+
+ - RedisCacheManager and GemfireCacheManager are JCache (JSR-107) implementation provided by Spring Data outside of spring core framework, this is available in Spring 3.2.
+
+ ## EhCache TODO
 
 

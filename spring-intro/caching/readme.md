@@ -1,5 +1,7 @@
 # Spring Caching
 
+ - Spring Doc: http://docs.spring.io/spring/docs/current/spring-framework-reference/html/cache.html
+ 
  - Spring’s cache abstraction comes in two forms:
   - Annotation-driven caching
   - XML-declared caching
@@ -68,6 +70,22 @@ public class CachingConfiguration {
  
 ## Populating the cache
  - @Cacheable and @Cacheput share a common set of attributes: **value**, **condition** (will be put in cache if evaluates to true), **key** (A SpEL expression to calculate a custom cache key), **unless** (A SpEL expression that, if evaluates to true, prevents the return value from being put in the cache).
-   
+ 
+```java
+    @Override
+	@Cacheable("books")
+	public Book getBookByIsbn(String isbn) {
+		simulateSlowService();
+		return new Book(isbn, "Some book");
+	}
+```
 
+### CUSTOMIZING THE CACHE KEY
+ - Both @Cacheable and @CachePut have a key attribute that lets you replace the default key with one derived from a SpEL expression.
+ 
+ - Suppose you like to get the id for a particular entity that is saved and suppose the method has a void return type. Spring exposes metadata and offers several SpEL extensions specifically for defining cache rules like #result.id (The #result expression will give you the returned Entity. From that, you can reference the id property by setting the key attribute to #result.id)
+   
+ - More examples: 
+  - Page 371 SIA
+  - http://docs.spring.io/spring/docs/current/spring-framework-reference/html/cache.html#cache-spel-context
 

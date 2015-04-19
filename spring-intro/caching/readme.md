@@ -54,6 +54,20 @@ public class CachingConfiguration {
 
  - RedisCacheManager and GemfireCacheManager are JCache (JSR-107) implementation provided by Spring Data outside of spring core framework, this is available in Spring 3.2.
 
- ## EhCache TODO
+## EhCache TODO
+ 
+## Annotating Methods for Caching
+ 
+ - @Cacheable: Indicates that Spring should look in a cache for the method's return value before invoking the method. If the value is found, the cached value is returned. If not, than the method is invoked and the return value is put in the cache.
+ 
+ - @CachePut: Indicates that Spring should put the method's return value in a cache. The cache isn't checked prior to method invocation, and the method is always invoked.
+ 
+ - @CacheEvict: Indicates that Spring should evict one or more entries from a cache.
+ 
+ - @Caching: A grouping annotation for applying multiples of the other caching annotations at once.
+ 
+## Populating the cache
+ - @Cacheable and @Cacheput share a common set of attributes: **value**, **condition** (will be put in cache if evaluates to true), **key** (A SpEL expression to calculate a custom cache key), **unless** (A SpEL expression that, if evaluates to true, prevents the return value from being put in the cache).
+   
 
 

@@ -80,6 +80,22 @@ public class CachingConfiguration {
 	}
 ```
 
+equivalent xml:
+```xml
+<bean id="cacheManager" class="org.springframework.cache.concurrent.ConcurrentMapCacheManager" />
+	<bean id="bookRepository" class="org.mujahed.repository.SimpleBookRepository"/>
+	
+	<aop:config>
+		<aop:advisor advice-ref="cacheAdvice" pointcut="execution(* org.mujahed.repository.SimpleBookRepository.*(..))"/>
+	</aop:config>
+ 	
+	<cache:advice id="cacheAdvice">
+		<cache:caching>
+			<cache:cacheable cache="bookCache" method="getBookByIsbn" />
+		</cache:caching>
+	</cache:advice>
+```
+
 ### Customising the Cache Key
  - Both @Cacheable and @CachePut have a key attribute that lets you replace the default key with one derived from a SpEL expression.
  

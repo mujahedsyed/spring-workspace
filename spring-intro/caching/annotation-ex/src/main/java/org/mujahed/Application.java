@@ -27,9 +27,12 @@ public class Application {
 		@Override
 		public void run(String... args) throws Exception {
 			log.info(".... Fetching books");
-			log.info("isbn-1234 -->" + bookRepository.getBookByIsbn("isbn-1234"));
-			log.info("isbn-1234 -->" + bookRepository.getBookByIsbn("isbn-1234"));
-			log.info("isbn-1234 -->" + bookRepository.getBookByIsbn("isbn-1234"));
+			log.info("isbn-1234 -->"
+					+ bookRepository.getBookByIsbn("isbn-1234"));
+			log.info("isbn-1234 -->"
+					+ bookRepository.getBookByIsbn("isbn-1234"));
+			log.info("isbn-1234 -->"
+					+ bookRepository.getBookByIsbn("isbn-1234"));
 		}
 	}
 

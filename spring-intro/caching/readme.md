@@ -80,7 +80,7 @@ public class CachingConfiguration {
 	}
 ```
 
-### CUSTOMIZING THE CACHE KEY
+### Customising the Cache Key
  - Both @Cacheable and @CachePut have a key attribute that lets you replace the default key with one derived from a SpEL expression.
  
  - Suppose you like to get the id for a particular entity that is saved and suppose the method has a void return type. Spring exposes metadata and offers several SpEL extensions specifically for defining cache rules like #result.id (The #result expression will give you the returned Entity. From that, you can reference the id property by setting the key attribute to #result.id)

@@ -383,7 +383,7 @@ public class ExceptionLoggerAspect extends CallTracker {
 
  * If you are dealing with a bean that is implemented through an interface than for proxies to work you should either:
   * all methods in the class implementing the interface should be present in the interface 
-  * in @EnableAsjectJAutoProxy(proxyTargetClass=true)
+  * in `@EnableAsjectJAutoProxy(proxyTargetClass=true)`
  * CGLIB allows to create dynamic subclass. Subclass implements the proxy. CGLIB is used if no interfaces are implemented, or set proxy-target-class to true. 
  * Another way to implement AOP is Dynamic Proxy, this feature is available in JDK. This is for interfaces only. Dynamic proxy is always implementation of interface.
  
@@ -398,7 +398,7 @@ public class ExceptionLoggerAspect extends CallTracker {
 </aop:config>
 ```
 
- + To force CGLIB proxying when using the @AspectJ autoproxy support, set the `'proxy-target-class'` attribute of the `<aop:aspectj-autoproxy>` element to true:
+ + To force CGLIB proxying when using the @AspectJ autoproxy support, set the `'proxy-target-class'` attribute of the `<aop:aspectj-autoproxy>` element to true or `@EnableAsjectJAutoProxy(proxyTargetClass=true)`:
 
 ```xml
 <aop:aspectj-autoproxy proxy-target-class="true"/>

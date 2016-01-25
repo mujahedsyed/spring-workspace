@@ -387,6 +387,23 @@ public class ExceptionLoggerAspect extends CallTracker {
  * CGLIB allows to create dynamic subclass. Subclass implements the proxy. CGLIB is used if no interfaces are implemented, or set proxy-target-class to true. 
  * Another way to implement AOP is Dynamic Proxy, this feature is available in JDK. This is for interfaces only. Dynamic proxy is always implementation of interface.
  
+ + **When is CGLib used and when is JDK proxy used?**
+ + If the target object to be proxied implements at least one interface then a JDK dynamic proxy will be used. All of the interfaces implemented by the target type will be proxied. If the target object does not implement any interfaces then a CGLIB proxy will be created.
+
+ + If you want to force the use of CGLIB proxying (for example, to proxy every method defined for the target object, not just those implemented by its interfaces) you can do so. To force the use of CGLIB proxies set the value of the `proxy-target-class` attribute of the `<aop:config>` element to true:
+
+```xml
+<aop:config proxy-target-class="true">
+    <!-- other beans defined here... -->
+</aop:config>
+```
+
+ + To force CGLIB proxying when using the @AspectJ autoproxy support, set the `'proxy-target-class'` attribute of the `<aop:aspectj-autoproxy>` element to true:
+
+```xml
+<aop:aspectj-autoproxy proxy-target-class="true"/>
+```
+
 #### Limitations of the proxy-based AOP Model
  * Work only on public methods.
  * Works only on methods  from outside, no internal method call.
